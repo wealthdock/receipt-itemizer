@@ -2,6 +2,7 @@
 
 from typer.testing import CliRunner
 
+from receipt_itemizer import __version__
 from receipt_itemizer.cli import app
 
 runner = CliRunner()
@@ -10,4 +11,4 @@ runner = CliRunner()
 def test_version_flag() -> None:
     result = runner.invoke(app, ["--version"])
     assert result.exit_code == 0
-    assert "0.1.0" in result.stdout
+    assert __version__ in result.stdout

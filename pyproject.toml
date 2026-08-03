@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "receipt-itemizer"
-version = "0.1.0"
+dynamic = ["version"]
 description = "OCR and line-item parsing of receipts — breaks a purchase down into individual line items with per-item categorization instead of one lump sum. Works fully standalone."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -34,6 +34,9 @@ dev = [
     "pre-commit>=3.6.0",
 ]
 
+[tool.hatch.version]
+path = "src/receipt_itemizer/__init__.py"
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/receipt_itemizer"]
 
@@ -43,12 +46,18 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = [
-    "E", "F", "W", "I", "N", "UP", "B", "A", "C4", "T20", "RET", "SIM", "ARG", "PTH", "ERA", "RUF"
+    "E", "F", "W", "I", "N", "D", "UP", "B", "A", "C4", "T20", "RET", "SIM", "ARG", "PTH", "ERA", "RUF"
 ]
 ignore = [
     "D100", # Missing docstring in public module
     "D104", # Missing docstring in public package
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D101", "D102", "D103"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.ruff.lint.isort]
 known-first-party = ["receipt_itemizer"]
@@ -56,14 +65,6 @@ known-first-party = ["receipt_itemizer"]
 [tool.mypy]
 python_version = "3.12"
 strict = true
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_any_generics = true
-check_untyped_defs = true
-no_implicit_reexport = true
-warn_redundant_casts = true
-warn_unused_ignores = true
 show_error_codes = true
 
 [tool.pytest.ini_options]
